@@ -352,28 +352,28 @@ bool operator <= (const BigInt &lhs, const BigInt &rhs) {
     return !(rhs < lhs);
 }
 
-int main() {
-    BigInt num1("40000000000000000000");
-    BigInt num2(201);
+// int main() {
+//     BigInt num1("4000000000000000000000000000000000000000000000000000000000000000");
+//     BigInt num2("20000000000000000000000");
 
-    std::cout << "Num1: " << num1 << std::endl;
-    std::cout << "Num2: " << num2 << std::endl;
+//     std::cout << "Num1: " << num1 << std::endl;
+//     std::cout << "Num2: " << num2 << std::endl;
 
-    BigInt sum = num1 + num2;
-    std::cout << "Sum: " << sum << std::endl;
+//     BigInt sum = num1 + num2;
+//     std::cout << "Sum: " << sum << std::endl;
 
-    BigInt diff = num1 - num2;
-    std::cout << "Difference: " << diff << std::endl;
+//     BigInt diff = num1 - num2;
+//     std::cout << "Difference: " << diff << std::endl;
 
-    BigInt product = num1 * num2;
-    std::cout << "Product: " << product << std::endl;
+//     BigInt product = num1 * num2;
+//     std::cout << "Product: " << product << std::endl;
 
-    BigInt quotient = num1 / num2;
-    std::cout << "Quotient: " << quotient << std::endl;
+//     BigInt quotient = num1 / num2;
+//     std::cout << "Quotient: " << quotient << std::endl;
 
-    BigInt remainder = num1 % num2;
-    std::cout << "Remainder: " << remainder << std::endl;
+//     BigInt remainder = num1 % num2;
+//     std::cout << "Remainder: " << remainder << std::endl;
 
 
-    return 0;
-}
+//     return 0;
+// }
