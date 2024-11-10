@@ -265,23 +265,39 @@ BigInt operator /(const BigInt &lhs, const BigInt &rhs) {
     if (rhs == BigInt(1)) {
         return lhs;
     }
-    BigInt result;
-    result.mySign = (lhs.mySign == rhs.mySign) ? BigInt::positive : BigInt::negative;
+    string ans = "";
+    int idx = lhs.myNumDigits - 1;
 
-    BigInt devidend(lhs);
-    BigInt devisor(rhs);
-    BigInt quotient(0);
+    BigInt temp(0);
 
-    devidend.mySign = devisor.mySign = BigInt::positive;
-    
-    while (devidend >= devisor) {
-        devidend = devidend - devisor;
-        quotient = quotient + BigInt(1);
+    while (idx >= 0 && temp < rhs) {
+        temp.myDigits.insert(temp.myDigits.begin(), lhs.myDigits[idx]);
+        temp.myNumDigits++;
+        temp.Normalize();
+        idx--;
     }
-    quotient.mySign = result.mySign;
-    quotient.Normalize();
 
-    return quotient;
+    while (idx >= -1) {
+        int count = 0;
+
+        while (temp >= rhs) {
+            temp = temp - rhs;
+            count++;
+        }
+        ans.push_back(count + '0');
+
+        if (idx >= 0) {
+            temp.myDigits.insert(temp.myDigits.begin(), lhs.myDigits[idx]);
+            temp.myNumDigits++;
+            temp.Normalize();
+        }
+        idx--;
+    }
+    BigInt result(ans);
+    result.mySign = (lhs.mySign == rhs.mySign) ? BigInt::positive : BigInt::negative;
+    result.Normalize();
+
+    return result;
 }
 
 BigInt operator /(const BigInt &lhs, int num) {
@@ -336,28 +352,28 @@ bool operator <= (const BigInt &lhs, const BigInt &rhs) {
     return !(rhs < lhs);
 }
 
-// int main() {
-//     BigInt num1("4");
-//     BigInt num2("200");
+int main() {
+    BigInt num1("40000000000000000000");
+    BigInt num2(201);
 
-//     std::cout << "Num1: " << num1 << std::endl;
-//     std::cout << "Num2: " << num2 << std::endl;
+    std::cout << "Num1: " << num1 << std::endl;
+    std::cout << "Num2: " << num2 << std::endl;
 
-//     BigInt sum = num1 + num2;
-//     std::cout << "Sum: " << sum << std::endl;
+    BigInt sum = num1 + num2;
+    std::cout << "Sum: " << sum << std::endl;
 
-//     BigInt diff = num1 - num2;
-//     std::cout << "Difference: " << diff << std::endl;
+    BigInt diff = num1 - num2;
+    std::cout << "Difference: " << diff << std::endl;
 
-//     BigInt product = num1 * num2;
-//     std::cout << "Product: " << product << std::endl;
+    BigInt product = num1 * num2;
+    std::cout << "Product: " << product << std::endl;
 
-//     BigInt quotient = num1 / num2;
-//     std::cout << "Quotient: " << quotient << std::endl;
+    BigInt quotient = num1 / num2;
+    std::cout << "Quotient: " << quotient << std::endl;
 
-//     BigInt remainder = num1 % num2;
-//     std::cout << "Remainder: " << remainder << std::endl;
+    BigInt remainder = num1 % num2;
+    std::cout << "Remainder: " << remainder << std::endl;
 
 
-//     return 0;
-// }
+    return 0;
+}
