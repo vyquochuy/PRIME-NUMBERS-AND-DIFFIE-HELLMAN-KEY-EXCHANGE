@@ -319,3 +319,11 @@ BigInt operator >> (const BigInt & lhs, int shift) {
     }
     return result;
 }
+
+BigInt operator | (const BigInt & lhs, const BigInt & rhs) {
+    BigInt result = lhs;
+    for (int i = 0; i < rhs.myNumDigits; ++i) {
+        result.AddSigDigit(rhs.GetDigit(i));
+    }
+    return result;
+}

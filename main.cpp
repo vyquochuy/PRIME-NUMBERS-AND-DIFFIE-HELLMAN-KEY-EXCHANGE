@@ -68,6 +68,8 @@ BigInt generate_safe_prime(int bit_size) {
         for (int i = 0; i < bit_size / 3.32; ++i) {
             prime = prime * 10 + dis(gen);
         }
+        if (prime % 2 == 0)
+            continue;
         std::cout << "Generated candidate prime: " << prime << std::endl;
         if (miller_rabin(prime) && miller_rabin((prime - 1) / 2)) {
             std::cout << "Prime passed Miller-Rabin test: " << prime << std::endl;
@@ -95,12 +97,12 @@ BigInt generate_private_key(BigInt p) {
 int main() {
     std::cout << "Diffie-Hellman Key Exchange\n";
     // 1. Sinh số nguyên tố lớn p và phần tử sinh g
-    int bit_size = 128; // Kích thước bit ví dụ, có thể điều chỉnh
+    int bit_size = 32; // Kích thước bit ví dụ, có thể điều chỉnh
 
     time_t start, end;
     start = time(NULL);
     BigInt p = generate_safe_prime(bit_size); // Sinh một số nguyên tố
-    BigInt g = 2; // phần tử sinh, sinh viên tự cần tìm hiểu và chọn giá trị khác
+    BigInt g = 5; // phần tử sinh, sinh viên tự cần tìm hiểu và chọn giá trị khác
     end = time(NULL);
     std::cout << "So Nguyen To P: " << p << "\n";
     std::cout << "thoi gian sinh so nguyen to: " << (end - start)*1000 << "s\n\n";

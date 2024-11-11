@@ -47,6 +47,7 @@ public:
     // New shift operators
     friend BigInt operator << (const BigInt & lhs, int shift);
     friend BigInt operator >> (const BigInt & lhs, int shift);
+    friend BigInt operator |  (const BigInt & lhs, const BigInt & rhs);
 
 private:
     enum Sign { positive, negative };   // Enumeration for sign
