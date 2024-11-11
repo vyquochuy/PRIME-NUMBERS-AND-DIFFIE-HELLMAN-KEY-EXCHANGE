@@ -1,55 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cmath>
-
-using namespace std;
-class BigInt {
-public:
-    // Constructors
-    BigInt();
-    BigInt(const string &);
-    BigInt(int);
-
-    // Member functions
-    bool IsNegative() const;
-    bool IsPositive() const;
-    int NumDigits() const;
-    int GetDigit(int k) const;
-    void AddSigDigit(int value);
-    void ChangeDigit(int k, int value);
-    void Normalize();
-    string to_string () const;
-    // Friend functions
-    friend ostream & operator << (ostream &, const BigInt &);
-    friend istream & operator >> (istream &, BigInt &);
-    friend BigInt operator + (const BigInt & lhs, const BigInt & rhs);
-    friend BigInt operator - (const BigInt & lhs, const BigInt & rhs);
-    BigInt operator -() const;
-    friend BigInt operator * (const BigInt & lhs, const BigInt & rhs);
-    friend BigInt operator * (const BigInt & lhs, int num);
-    friend BigInt operator * (int num, const BigInt & rhs);
-    friend BigInt operator % (const BigInt & lhs, const BigInt & rhs);
-    friend BigInt operator % (const BigInt & lhs, int num);
-    friend BigInt operator / (const BigInt & lhs, const BigInt & rhs);
-    friend BigInt operator / (const BigInt & lhs, int num);
-
-    friend bool operator == (const BigInt & lhs, const BigInt & rhs);
-    friend bool operator <  (const BigInt & lhs, const BigInt & rhs);
-    friend bool operator <  (const BigInt & lhs, int num);
-    friend bool operator != (const BigInt & lhs, const BigInt & rhs);
-    friend bool operator >  (const BigInt & lhs, const BigInt & rhs);
-    friend bool operator >  (const BigInt & lhs, int num);
-    friend bool operator >= (const BigInt & lhs, const BigInt & rhs);
-    friend bool operator <= (const BigInt & lhs, const BigInt & rhs);
-
-private:
-    enum Sign { positive, negative };
-    Sign mySign; // is number positive or negative
-    vector<char> myDigits; // stores all digits of number
-    int myNumDigits; // stores # of digits of number
-};
+#include "BigInt.h"
 
 // Constructors
 BigInt::BigInt() : mySign(positive), myNumDigits(0) {}
@@ -66,7 +15,7 @@ BigInt::BigInt(const std::string &str) {
     myNumDigits = myDigits.size();
 }
 
-BigInt::BigInt(int num) {
+BigInt::BigInt(long long num) {
     if (num < 0) {
         mySign = negative;
         num = -num;
@@ -121,8 +70,8 @@ void BigInt::Normalize() {
     }
 }
 
-string BigInt::to_string() const {
-    string result;
+std::string BigInt::to_string() const {
+    std::string result;
     if (mySign == negative) {
         result.push_back('-');
     }
@@ -130,6 +79,10 @@ string BigInt::to_string() const {
         result.push_back(myDigits[i]);
     }
     return result;
+}
+
+int BigInt::lastDigit() const {
+    return myDigits[0] - '0';
 }
 
 // Friend functions
@@ -268,8 +221,7 @@ BigInt operator /(const BigInt &lhs, const BigInt &rhs) {
     if (rhs == BigInt(1)) {
         return lhs;
     }
-
-    string ans = "";
+    std::string ans = "";
     int idx = lhs.myNumDigits - 1;
 
     BigInt temp(0);
@@ -320,7 +272,6 @@ BigInt operator %(const BigInt &lhs, int num) {
     return lhs % BigInt(num);
 }
 
-
 bool operator == (const BigInt &lhs, const BigInt &rhs) {
     return lhs.mySign == rhs.mySign && lhs.myDigits == rhs.myDigits;
 }
@@ -364,28 +315,27 @@ bool operator <= (const BigInt &lhs, const BigInt &rhs) {
     return !(rhs < lhs);
 }
 
-// int main() {
-//     BigInt num1("4000000000000000000000000000000000000000000000000000000000000000");
-//     BigInt num2("20000000000000000000000");
+// New shift operators
+BigInt operator << (const BigInt & lhs, int shift) {
+    BigInt result = lhs;
+    for (int i = 0; i < shift; ++i) {
+        result = result * 2;
+    }
+    return result;
+}
 
-//     std::cout << "Num1: " << num1 << std::endl;
-//     std::cout << "Num2: " << num2 << std::endl;
+BigInt operator >> (const BigInt & lhs, int shift) {
+    BigInt result = lhs;
+    for (int i = 0; i < shift; ++i) {
+        result = result / 2;
+    }
+    return result;
+}
 
-//     BigInt sum = num1 + num2;
-//     std::cout << "Sum: " << sum << std::endl;
-
-//     BigInt diff = num1 - num2;
-//     std::cout << "Difference: " << diff << std::endl;
-
-//     BigInt product = num1 * num2;
-//     std::cout << "Product: " << product << std::endl;
-
-//     BigInt quotient = num1 / num2;
-//     std::cout << "Quotient: " << quotient << std::endl;
-
-//     BigInt remainder = num1 % num2;
-//     std::cout << "Remainder: " << remainder << std::endl;
-
-
-//     return 0;
-// }
+BigInt operator | (const BigInt & lhs, const BigInt & rhs) {
+    BigInt result = lhs;
+    for (int i = 0; i < rhs.myNumDigits; ++i) {
+        result.AddSigDigit(rhs.GetDigit(i));
+    }
+    return result;
+}
