@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 class BigInt {
@@ -36,8 +37,10 @@ public:
 
     friend bool operator == (const BigInt & lhs, const BigInt & rhs);
     friend bool operator <  (const BigInt & lhs, const BigInt & rhs);
+    friend bool operator <  (const BigInt & lhs, int num);
     friend bool operator != (const BigInt & lhs, const BigInt & rhs);
     friend bool operator >  (const BigInt & lhs, const BigInt & rhs);
+    friend bool operator >  (const BigInt & lhs, int num);
     friend bool operator >= (const BigInt & lhs, const BigInt & rhs);
     friend bool operator <= (const BigInt & lhs, const BigInt & rhs);
 
@@ -265,6 +268,7 @@ BigInt operator /(const BigInt &lhs, const BigInt &rhs) {
     if (rhs == BigInt(1)) {
         return lhs;
     }
+
     string ans = "";
     int idx = lhs.myNumDigits - 1;
 
@@ -336,12 +340,20 @@ bool operator <  (const BigInt &lhs, const BigInt &rhs) {
     return false;
 }
 
+bool operator <  (const BigInt &lhs, int num) {
+    return lhs < BigInt(num);
+}
+
 bool operator != (const BigInt &lhs, const BigInt &rhs) {
     return !(lhs == rhs);
 }
 
 bool operator >  (const BigInt &lhs, const BigInt &rhs) {
     return rhs < lhs;
+}
+
+bool operator >  (const BigInt &lhs, int num) {
+    return lhs > BigInt(num);
 }
 
 bool operator >= (const BigInt &lhs, const BigInt &rhs) {

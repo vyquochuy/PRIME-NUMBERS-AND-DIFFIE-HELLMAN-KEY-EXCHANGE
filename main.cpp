@@ -1,7 +1,7 @@
 #include <iostream>
 #include <random>
 #include <cmath>
-
+#include <ctime>
 // A: Triển khai hàm lũy thừa mô-đun
 // hàm cần thực hiện: (base^exponent) % mod
 long long modular_exponentiation(long long base, long long exponent, long long mod) {
