@@ -22,6 +22,7 @@ public:
     void ChangeDigit(int k, int value);
     void Normalize();
     std::string to_string() const;
+    int lastDigit() const;
 
     // Friend functions
     friend std::ostream & operator << (std::ostream &, const BigInt &);

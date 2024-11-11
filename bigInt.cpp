@@ -81,6 +81,10 @@ std::string BigInt::to_string() const {
     return result;
 }
 
+int BigInt::lastDigit() const {
+    return myDigits[0] - '0';
+}
+
 // Friend functions
 std::ostream & operator <<(std::ostream &out, const BigInt &num) {
     if (num.mySign == BigInt::negative) {
