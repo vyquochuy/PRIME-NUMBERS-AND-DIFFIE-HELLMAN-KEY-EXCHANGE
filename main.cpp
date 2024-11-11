@@ -19,7 +19,7 @@ std::vector<int> first_prime = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
                                 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947,   
                                 953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033,
                                 1039, 1049, 1051, 1061, 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109,};
-
+                                
 // A: Triển khai hàm lũy thừa mô-đun (Exponentiation by Squaring)
 BigInt modular_exponentiation(BigInt base, BigInt exponent, BigInt mod) {
     BigInt result = 1;
@@ -53,7 +53,7 @@ bool miller_rabin(BigInt n, int k = 5) {
 
     std::random_device rd;
     std::mt19937_64 gen(rd());
-    std::uniform_int_distribution<int> dis(2, 9);
+    std::uniform_int_distribution<int> dis(2, 100);
 
     for (int i = 0; i < k; i++) {
         BigInt a = dis(gen); // Chọn a ngẫu nhiên
@@ -72,6 +72,7 @@ bool miller_rabin(BigInt n, int k = 5) {
 BigInt generate_safe_prime(int bit_size) {
     BigInt min = BigInt(1) << (bit_size - 1);
     BigInt max = (BigInt(1) << bit_size) - 1;
+
     BigInt prime = 0;
 
     std::random_device rd;
@@ -84,17 +85,14 @@ BigInt generate_safe_prime(int bit_size) {
             prime = prime * 10 + dis(gen);
         }
         BigInt prime2 = (prime - 1) / 2;
-        
         // kiểm tra số nguyên tố có kết thúc bằng 1, 3, 7, 9
-        if (prime.lastDigit() != 1  && prime.lastDigit() != 3 && prime.lastDigit() != 7 && prime.lastDigit() != 9) 
-            continue;
-        if (prime2.lastDigit() != 1  && prime2.lastDigit() != 3 && prime2.lastDigit() != 7 && prime2.lastDigit() != 9) 
-            continue;
+        if (prime.lastDigit() != 1  && prime.lastDigit() != 3 && prime.lastDigit() != 7 && prime.lastDigit() != 9) continue;
+        if (prime2.lastDigit() != 1  && prime2.lastDigit() != 3 && prime2.lastDigit() != 7 && prime2.lastDigit() != 9) continue;
 
         // kiểm tra số nguyên tố có dạng 3k+1
         if (prime % 3 == 1 || prime2 % 3 == 1) continue;
 
-        // chia cho 200 số nguyên tố đầu tiên
+        // chia cho 100 số nguyên tố đầu tiên
         bool is_composite = false;
         for (int p : first_prime) {
             if ((prime % p == 0 && prime != p) || (prime2 % p == 0 && prime2 != p)) {
