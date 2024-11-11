@@ -78,17 +78,18 @@ BigInt generate_safe_prime(int bit_size) {
         for (int i = 0; i < bit_size / 3.32; ++i) {
             prime = prime * 10 + dis(gen);
         }
+        BigInt prime2 = (prime - 1) / 2;
         // kiểm tra số nguyên tố có kết thúc bằng 1, 3, 7, 9
         if (prime.lastDigit() != 1  && prime.lastDigit() != 3 && prime.lastDigit() != 7 && prime.lastDigit() != 9) continue;
+        if (prime2.lastDigit() != 1  && prime2.lastDigit() != 3 && prime2.lastDigit() != 7 && prime2.lastDigit() != 9) continue;
 
         // kiểm tra số nguyên tố có dạng 6k+1 hoặc 6k-1
-        BigInt prime2 = (prime - 1) / 2;
         if (prime % 3 == 1 || prime2 % 3 == 1) continue;
 
         // chia cho 100 số nguyên tố đầu tiên
         bool is_composite = false;
         for (int p : first_prime) {
-            if (prime % p == 0 && prime != p) {
+            if ((prime % p == 0 && prime != p) || (prime2 % p == 0 && prime2 != p)) {
                 is_composite = true;
                 break;
             }
@@ -122,7 +123,7 @@ BigInt generate_private_key(BigInt p) {
 int main() {
     std::cout << "Diffie-Hellman Key Exchange\n";
     // 1. Sinh số nguyên tố lớn p và phần tử sinh g
-    int bit_size = 128; // Kích thước bit ví dụ, có thể điều chỉnh
+    int bit_size = 512; // Kích thước bit ví dụ, có thể điều chỉnh
 
     time_t start, end;
     start = time(NULL);
@@ -149,7 +150,6 @@ int main() {
     std::cout << "Gia Tri Cong Khai Cua Alice: " << A << "\n";
     std::cout << "Gia Tri Cong Khai Cua Bob: " << B << "\n";
     std::cout << "thoi gian tinh gia tri cong khai: " << (end - start)*1000 << "ms\n\n";
-
 
     // 4. Tính bí mật chung
     start = time(NULL);
