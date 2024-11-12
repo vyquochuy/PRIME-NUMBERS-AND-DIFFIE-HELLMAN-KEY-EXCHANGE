@@ -84,7 +84,13 @@ std::string BigInt::to_string() const {
 int BigInt::lastDigit() const {
     return myDigits[0] - '0';
 }
-
+BigInt Pow(int t, const BigInt& m) {
+    BigInt result = t;
+    for (BigInt i = 1; i < m; i=i+1) {
+        result = result * t;
+    }
+    return result;
+}
 // Friend functions
 std::ostream & operator <<(std::ostream &out, const BigInt &num) {
     if (num.mySign == BigInt::negative) {

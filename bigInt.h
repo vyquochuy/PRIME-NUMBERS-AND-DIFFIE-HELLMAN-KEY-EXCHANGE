@@ -32,6 +32,7 @@ public:
     BigInt operator -() const;
     friend BigInt operator * (const BigInt & lhs, const BigInt & rhs);
     friend BigInt operator * (const BigInt & lhs, int num);
+
     friend BigInt operator * (int num, const BigInt & rhs);
     friend BigInt operator % (const BigInt & lhs, const BigInt & rhs);
     friend BigInt operator % (const BigInt & lhs, int num);
@@ -56,5 +57,5 @@ private:
     std::vector<char> myDigits;         // Digits of the number in reverse order
     int myNumDigits;                    // Number of digits
 };
-
+BigInt Pow(int t, const BigInt & rhs);
 #endif // BIGINT_H
