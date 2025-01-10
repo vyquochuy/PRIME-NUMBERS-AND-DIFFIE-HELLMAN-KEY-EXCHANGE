@@ -11,8 +11,8 @@ public:
     // Constructors
     BigInt();
     BigInt(const std::string &);
-    BigInt(long long);
-
+    BigInt(long long);  
+    ~BigInt();
     // Member functions
     bool IsNegative() const;
     bool IsPositive() const;

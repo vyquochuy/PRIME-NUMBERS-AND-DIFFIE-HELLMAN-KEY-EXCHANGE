@@ -85,7 +85,7 @@ BigInt generate_safe_prime(int bit_size) {
             prime = prime * 10 + dis(gen);
         }
         BigInt prime2 = (prime - 1) / 2;
-        // kiểm tra số nguyên tố có kết thúc bằng 1, 3, 7, 9
+        // kiểm tra số nguyên tố có kết thúc bằng 3, 7, 9
         if (prime.lastDigit() != 3 && prime.lastDigit() != 7 && prime.lastDigit() != 9) continue;
 
         // kiểm tra số nguyên tố có dạng 3k+1

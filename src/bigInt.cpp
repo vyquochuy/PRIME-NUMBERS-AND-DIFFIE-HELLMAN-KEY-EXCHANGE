@@ -29,6 +29,11 @@ BigInt::BigInt(long long num) {
     myNumDigits = myDigits.size();
 }
 
+BigInt::~BigInt() {
+    myDigits.clear();
+    myNumDigits = 0;
+}
+
 // Member functions
 bool BigInt::IsNegative() const {
     return mySign == negative;
